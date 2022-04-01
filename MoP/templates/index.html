@@ -19,10 +19,10 @@
 			<nav id="main-nav">
 				<img src="{% static 'img/pas.png' %}" alt="PAS Logo" id="logo">
 				<ul>
-					<li><a href="{% static 'index.html' %}" class="current"> HOME </a></li>
-					<li><a href = "{% static 'characters.html' %}"> CHARACTERS </a></li>
-                    <li><a href = "{% static 'about.html' %}"> ABOUT US </a></li>
-                    <li><a href = "{% static 'play.html' %}"> PLAY </a></li>
+					<li><a href = "{% url 'index' %}" class="current"> HOME </a></li>
+					<li><a href = "{% url 'characters' %}"> CHARACTERS </a></li>
+                    <li><a href = "{% url 'about' %}"> ABOUT US </a></li>
+                    <li><a href = "{% url 'play' %}"> PLAY </a></li>
 				</ul>
 			</nav>
 			<div class="header-content">
@@ -70,7 +70,6 @@
 			<i class="fa-brands fa-instagram"></i>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</div>
-
 	</footer>
 </body>
 </html>

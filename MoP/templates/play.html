@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	{% load static %}
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 
-	<link rel="stylesheet" href="css/stylesheet.css">
+	<link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="javascript/script.js"></script>
+	<script src="{% static 'javascript/script.js' %}"></script>
 	<script src="https://kit.fontawesome.com/a58ac90e93.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -16,12 +17,12 @@
     <header id = "header-inner">
         <div class = "container">
             <nav id = "main-nav">
-                <img src="img/pas.png" alt="PAS Logo" id="logo">
+                <img src="{% static 'img/pas.png' %}" alt="PAS Logo" id="logo">
                 <ul>
-                    <li><a href="index.html" > HOME </a></li>
-					<li><a href = "characters.html"> CHARACTERS </a></li>
-                    <li><a href = "about.html"> ABOUT US </a></li>
-                    <li><a href = "play.html" class="current"> PLAY </a></li>
+                    <li><a href = "{% url 'index' %}"> HOME </a></li>
+					<li><a href = "{% url 'characters' %}"> CHARACTERS </a></li>
+                    <li><a href = "{% url 'about' %}"> ABOUT US </a></li>
+                    <li><a href = "{% url 'play' %}" class="current"> PLAY </a></li>
                 </ul>
             </nav>
         </div>
@@ -30,7 +31,7 @@
 	<section id="play-test">
 		<div class="container">
 			<div class="game">
-				<img class="login-screen" src="img/playscreen.jpeg">
+				<img class="login-screen" src="{% static 'img/playscreen.jpeg' %}">
 			</div>
 		</div>
 	</section>

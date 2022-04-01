@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	{% load static %}
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>About Us</title>
 
-	<link rel="stylesheet" href="css/stylesheet.css">
+	<link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="javascript/script.js"></script>
+	<script src="{% static 'javascript/script.js' %}"></script>
 	<script src="https://kit.fontawesome.com/a58ac90e93.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -16,12 +17,12 @@
     <header id = "header-inner">
         <div class = "container">
             <nav id = "main-nav">
-                <img src="img/pas.png" alt="PAS Logo" id="logo">
+                <img src="{% static 'img/pas.png' %}" alt="PAS Logo" id="logo">
                 <ul>
-                    <li><a href="index.html" > HOME </a></li>
-					<li><a href = "characters.html"> CHARACTERS </a></li>
-                    <li><a href = "about.html" class="current"> ABOUT US </a></li>
-                    <li><a href = "play.html"> PLAY </a></li>
+                    <li><a href = "{% url 'index' %}" > HOME </a></li>
+					<li><a href = "{% url 'characters' %}"> CHARACTERS </a></li>
+                    <li><a href = "{% url 'about' %}" class="current"> ABOUT US </a></li>
+                    <li><a href = "{% url 'play' %}"> PLAY </a></li>
                 </ul>
             </nav>
         </div>
@@ -55,7 +56,7 @@
 				</div>
 
 				<div class="flex-child image">
-					<img class="drummer" src="img/pasdrummer.jpg">
+					<img class="drummer" src="{% static 'img/pasdrummer.jpg' %}">
 				</div>
 
 			</div>
@@ -66,7 +67,7 @@
 		<div class="container">
 			<div class="flex-container">
 				<div class="flex-child game">
-					<img class="gameslide" src="img/platformtest.png">
+					<img class="gameslide" src="{% static 'img/platformtest.png' %}">
 				</div>
 
 				<div class = "flex-child infogame">
@@ -109,13 +110,13 @@
 							instruments you may have earned. 
 						</p>
 
-					<img class="cuphead1" src="img/cup1.jpg">
+					<img class="cuphead1" src="{% static 'img/cup1.jpg' %}">
 
 					</div>
 				</div>
 
 				<div class = "flex-child controls">
-					<img class="cuphead2" src="img/cup2.jpg">
+					<img class="cuphead2" src="{% static 'img/cup2.jpg' %}">
 					<p>Inside the platform levels following keys to move:</p>
 					<ul>
 						<li> W - JUMP </li>
@@ -142,7 +143,7 @@
 								<li>all time peak - <strong>272, 586</strong></li>
 								<li>Total played time - <strong>489d, 19h. 23min</strong></li>
 							</ul>
-							<img class="graph" src="img/graph.png">
+							<img class="graph" src="{% static 'img/graph.png' %}">
 						</div>
 					</div>
 
@@ -162,7 +163,7 @@
 
 							<p> <strong>And we are here to help!</strong> </p>
 
-							<img class="team-image" src="img/team.jpeg">
+							<img class="team-image" src="{% static 'img/team.jpeg' %}">
 						</div>
 					</div>
 				</div>
@@ -174,7 +175,7 @@
 			<div class="leaderboardbox">
 				<h2> LEADERBOARD </h2>
 				<hr>
-				<img class="leaderboard" src="img/leaderboard.webp">
+				<img class="leaderboard" src="{% static 'img/leaderboard.webp' %}">
 			</div>
 		</div>
 	</section>
@@ -184,7 +185,7 @@
 			<div class="fanfavoritesbox">
 				<h2> FAN FAVORITES </h2>
 				<hr>
-				<img class="favinstruments" src="img/fanfav.png">
+				<img class="favinstruments" src="{% static 'img/fanfav.png' %}">
 			</div>
 		</div>
 	</section>
@@ -194,7 +195,7 @@
 			<div class="worldbox">
 				<h2> FRIENDS AROUND THE WORLD </h2>
 				<hr>
-				<img class="worldstats" src="img/worldstats.png">
+				<img class="worldstats" src="{% static 'img/worldstats.png' %}">
 			</div>
 		</div>
 	</section>

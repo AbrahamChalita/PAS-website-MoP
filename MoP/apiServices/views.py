@@ -6,5 +6,5 @@ from django.shortcuts import render
 from json import dumps, load, loads
 
 # Create your views here.
-def index(request):
+def main(request):
 	return render(request, 'main.html')
