@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Characters</title>
+	<!-- Stylesheet -->
+	<link rel="stylesheet" href="css/stylesheet_char.css">
+	<!-- Scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+	<script src="./javascript/script.js"></script>
+	<script src="https://kit.fontawesome.com/a58ac90e93.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<header id = "header-inner">
+        <div class = "container">
+            <nav id = "main-nav">
+                <img src="img/pas.png" alt="PAS Logo" id="logo">
+                <ul>
+                    <li><a href="index.html" > HOME </a></li>
+					<li><a href = "characters.html" class="current"> CHARACTERS </a></li>
+                    <li><a href = "about.html"> ABOUT US </a></li>
+                    <li><a href = "play.html"> PLAY </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+	
+	<section class="characters">
+		<div class="container">
+			<div class="nations">
+				<table>
+					<tr>
+						<td>America</td>
+						<td>Japan</td>
+						<td>Coming Soon</td>
+					</tr>
+				</table>
+			</div>
+	
+			<div class="body-sliders">
+				<!-- Slider de Imagenes -->
+				<div class="slider">
+					<!-- Botones estilo radio -->
+					<input type="radio" name="radio-btn" id="radio1" hidden>
+					<input type="radio" name="radio-btn" id="radio2" hidden>
+					<!-- Imagenes correspondientes -->
+					<div class="miwok slide first">
+						<h1>MIWOK</h1>
+						<p>He is a little bear from Indianapolis. His mentor is TAIMA, who sent him to explore the different percussion instruments in the world.</p>
+						<img src="./src/miwok.png" alt="">
+					</div>
+					<div class="taima slide">
+						<h1>TAIMA</h1>
+						<p>He is Miwok's teacher and has extensive knowledge of the various instruments of persuasion in the world. He decides to send Miwok on a journey he himself made in his youth.</p>
+						<img src="./src/taima.png" alt="">
+					</div>
+
+					<!-- manual navigation -->
+					<div class="navigation-manual">
+						<label for="radio1" class="manual-btn"></label>
+						<label for="radio2" class="manual-btn"></label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Footer de la pagina -->
+	<footer>
+		<div class="footer">
+			Subscribe to stay tunned!
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="email" name="sub_mail" id="sub_mail">
+			<input type="button" value="Subscribe">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<i class="fa-brands fa-facebook"></i>
+			<i class="fa-brands fa-youtube"></i>
+			<i class="fa-brands fa-instagram"></i>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</div>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,293 @@
+.container {
+    max-width: 1270px;
+    padding: 0 1.5rem;
+    margin: auto;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Dosis', sans-serif;
+    line-height: 1.8;
+    background: #fff;
+    margin: 0;
+}
+ 
+ul {
+    list-style: none;
+}
+
+img {
+    width:100;
+}
+
+#logo {
+    width: 180px;
+    height: 150px;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 50%;
+}
+
+#main-nav {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem; 
+}
+
+/* This makes the elements on the nav-bar horizontal */
+#main-nav ul {
+    display: flex; 
+}
+
+#main-nav li {
+    padding: 1rem 1.5rem; 
+}
+
+#main-nav a {
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 20px;
+    border-bottom: 3px transparent solid;
+    padding-bottom: 0.5rem;
+    transition: border-color 0.5s; 
+}
+
+#main-nav a:hover {
+    border-color: #ccc; 
+}
+#main-nav a.current {
+    border-color: #1c56df; 
+}
+
+#header-home {
+    background: url("../img/bonfire.gif") no-repeat center right/cover;
+    height: 100vh;
+    color: #fff; 
+}
+
+#header-home .header-content {
+    text-align: center;
+    padding-top: 20%; 
+}
+
+#header-inner {
+    background: url("../img/bonfire.gif") no-repeat 20% 30%/cover;
+    height: 7rem;
+    border-bottom: 3px solid #2c62e0; 
+}
+
+.back{
+    background-color: transparent;
+    border: none;
+}
+
+.back img{
+    width: 40%;
+}
+
+.section-title {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 45px;
+}
+
+#section-news {
+    background: url("../img/news.webp")
+}
+
+.flex-container {
+    display: flex;
+    padding-bottom: 200px;
+}
+
+.flex-child {
+    flex: 1;
+}  
+
+.flex-child img{
+    width: 105%;
+}
+
+.flex-child:first-child {
+    margin-right: 35px;
+} 
+
+.info-text {
+    background: rgba(104, 100, 100, 0.637);
+}
+
+.info-text ul {
+    list-style-type: square;
+    text-transform: uppercase;
+    color: white;
+    text-align: left;
+    font-size: 25px;
+    padding-bottom: 322px;
+    margin-top: -32px;
+}
+
+.aboutpas{
+    padding-top: 100px;
+    padding-left: 60px;
+    padding-bottom: 80px;
+}
+
+.aboutpas h3{
+    color:rgb(252, 170, 7);
+}
+.aboutpas p{
+    font-size: 20px;
+}
+
+.flex-child .drummer{
+    width: 600px;
+    height: 370px;
+    padding-top: 190px;
+}
+
+.aboutgame {
+    padding-left: 100px;
+    padding-top: 0;
+    padding-bottom: 40px;
+}
+
+.aboutgame h2{
+    color:rgb(252, 170, 7);
+}
+
+.aboutgame p{
+    width: 480px;
+    font-size: 18px;
+}
+
+.flex-child .gameslide {
+    padding-top: 10px;
+    padding-left: 70px;
+}
+
+.aboutplaying h2{
+    color:rgb(252, 170, 7);
+}
+
+.flex-child .cuphead1 {
+    width: 600px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.flex-child .cuphead2 {
+    width: 600px;
+    padding-left: 20px;
+    padding-top: 100px;
+}
+
+.controls p{
+    padding-left: 30px;
+    font-size: 20px;
+}
+
+.controls ul{
+    padding-left: 90px;
+    color: blue;
+    font-size: 20px;
+}
+
+.flex-child.community {
+    margin-right: 120px;
+}
+
+.stats ul {
+    font-size: 20px;
+}
+
+.stats h2 {
+    color:rgb(252, 170, 7);
+}
+
+.stats .graph{
+    padding-top: 40px;
+}
+
+.flex-child.team {
+    padding-top: 100px;
+}
+.info-team {
+    background: rgba(206, 206, 52, 0.637);
+    padding: 1.5em 1.5em 1.5em 1.5em;
+}
+
+.info-team p {
+    font-size: 18px;
+}
+
+.info-team ul {
+    font-size: 18px;
+}
+
+.info-team .team-image {
+    width: 87%;
+    padding-left: 40px;
+}
+
+.leaderboardbox h2{
+    color:rgb(252, 170, 7);
+}
+
+.leaderboardbox .leaderboard {
+    padding-top: 50px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+}
+
+.fanfavoritesbox h2{
+    color:rgb(252, 170, 7);
+}
+
+.fanfavoritesbox .favinstruments {
+    padding-top: 50px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+}
+
+.worldbox h2{
+    color:rgb(252, 170, 7);
+}
+
+.worldbox .worldstats {
+    padding-top: 50px;
+    padding-left: 250px;
+    padding-bottom: 40px;
+}
+
+.game .login-screen {
+    width: 120%;
+    padding-top: 60px;
+}
+
+footer {
+	background-color: rgb(65, 141, 255);
+	width: 100%;
+	left: 0px;
+	text-align: center;
+}
+/* Centrado de Contenido en Footer */
+.footer {
+	padding: 25px 25px;
+	color: white;
+}
+  
+  
+  
+  
+  
+  
+
+  
+
+
+
+
+
+  

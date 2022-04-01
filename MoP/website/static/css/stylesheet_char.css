@@ -1,0 +1,197 @@
+.container {
+    max-width: 1270px;
+    padding: 0 1.5rem;
+    margin: auto;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Dosis', sans-serif;
+    line-height: 1.8;
+    background: #fff;
+    margin: 0;
+}
+ 
+ul {
+    list-style: none;
+}
+
+img {
+    width:100;
+}
+
+#logo {
+    width: 180px;
+    height: 150px;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 50%;
+}
+
+#main-nav {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem; 
+}
+
+/* This makes the elements on the nav-bar horizontal */
+#main-nav ul {
+    display: flex; 
+}
+
+#main-nav li {
+    padding: 1rem 1.5rem; 
+}
+
+#main-nav a {
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 20px;
+    border-bottom: 3px transparent solid;
+    padding-bottom: 0.5rem;
+    transition: border-color 0.5s; 
+}
+
+#main-nav a:hover {
+    border-color: #ccc; 
+}
+#main-nav a.current {
+    border-color: #1c56df; 
+}
+
+#header-home {
+    background: url("../img/bonfire.gif") no-repeat center right/cover;
+    height: 100vh;
+    color: #fff; 
+}
+
+#header-home .header-content {
+    text-align: center;
+    padding-top: 20%; 
+}
+
+#header-inner {
+    background: url("../img/bonfire.gif") no-repeat 20% 30%/cover;
+    height: 7rem;
+    border-bottom: 3px solid #2c62e0; 
+}
+
+.characters {
+	background: url("../img/tree.webp");
+}
+
+.nations {
+	width: 100%;
+	font-size: 25px;
+	font-family: sans-serif;
+	text-align: center;
+	margin-top: 80px;
+}
+
+.nations table {
+	background-color: rgba(255, 255, 255, 0.6);
+	margin-left: auto; 
+	margin-right: auto;
+}
+
+.nations td {
+	width: 13%;
+}
+
+/* Slide Navigation */
+.body-sliders {
+	margin: 0;
+	padding: 0;
+	height: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.slider {
+	width: 90%;
+	height: 604px;
+	overflow: hidden;
+	margin-top: 25px;
+	text-align: center;
+	background-color: #0000004f;
+	border-radius: 20%;
+}
+
+.slide {
+	width: 100%;
+	height: 80%;
+}
+
+.slider h1 {
+	font-family: sans-serif;
+	color: white;
+	height: 20px;
+}
+
+.slider p {
+	color: white;
+	width: 25%;
+	height: 60%;
+	margin-left: 20%;
+	font-size: 1.2vw;
+	font-family: sans-serif;
+	text-align: left;
+	margin-top: 9%;
+	margin-bottom: -33%;
+}
+
+.slider img{
+	width: 50%;
+	height: auto;
+	margin-left: 50%;
+	margin-top: -6%;
+}
+
+/* CSS for manual slide navigation */
+.navigation-manual {
+	position: relative;
+	bottom: 10px;
+	display: flex;
+	justify-content: center;
+}
+
+.manual-btn {
+	border: 4px solid #e5ff00;
+	padding: 5px;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: 1s;
+}
+
+.manual-btn:not(:last-child) {
+	margin-right: 40px;
+}
+
+.manual-btn:hover {
+	background: #000000;
+}
+
+#radio1:checked ~ .first {
+	margin-left: 0;
+}
+
+#radio2:checked ~ .first {
+	margin-left: -20%;
+}
+
+/* Estilo de Footer */
+footer {
+	background-color: rgb(65, 141, 255);
+	width: 100%;
+	left: 0px;
+	text-align: center;
+}
+
+/* Centrado de Contenido en Footer */
+.footer {
+	padding: 25px 25px;
+	color: white;
+}

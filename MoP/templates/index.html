@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load static %}
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home</title>
+
+	<link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
+	<script type="text/javascript" src="{% static 'javascript/script.js' %}"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://kit.fontawesome.com/a58ac90e93.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<header id="header-home">
+		<div class="container">
+			<nav id="main-nav">
+				<img src="{% static 'img/pas.png' %}" alt="PAS Logo" id="logo">
+				<ul>
+					<li><a href="{% static 'index.html' %}" class="current"> HOME </a></li>
+					<li><a href = "{% static 'characters.html' %}"> CHARACTERS </a></li>
+                    <li><a href = "{% static 'about.html' %}"> ABOUT US </a></li>
+                    <li><a href = "{% static 'play.html' %}"> PLAY </a></li>
+				</ul>
+			</nav>
+			<div class="header-content">
+					<button class="back" id="trailer" onclick="openVideo()">
+						<img src="{% static 'img/play-button.png' %}">
+					</button>
+            </div>
+		</div>
+	</header>
+
+	<section id="section-news">
+		<div class="container">
+			<h2 class = "section-title"> <------------------ NEWS ------------------> </h2>
+				<div class = "flex-container">
+					<div class = "flex-child image">
+						<img src="{% static 'img/segNews.webp' %}">
+					</div>
+
+					<div class = "flex-child textnews">
+						<div class="info-text">
+							<ul>
+								<h2> Most Recent </h2>
+								<li> The first stage of the game development process has begun.</li>
+								<li></li>
+								<li> This is a mockup for the home page news section.</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+		</div>
+	</section>
+	
+	<!-- Footer de la pagina -->
+	<footer>
+		<div class="footer">
+			Subscribe to stay tunned!
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="email" name="sub_mail" id="sub_mail">
+			<input type="button" value="Subscribe">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<i class="fa-brands fa-facebook"></i>
+			<i class="fa-brands fa-youtube"></i>
+			<i class="fa-brands fa-instagram"></i>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</div>
+
+	</footer>
+</body>
+</html>

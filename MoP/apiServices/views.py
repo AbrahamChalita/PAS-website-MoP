@@ -1,3 +1,4 @@
+import re
 import sqlite3
 from django.http import HttpResponse, Http404, JsonResponse
 from django.template import loader
@@ -6,4 +7,4 @@ from json import dumps, load, loads
 
 # Create your views here.
 def index(request):
-	return HttpResponse("<h1>Hola desde Django!</h1>")
+	return render(request, 'main.html')
