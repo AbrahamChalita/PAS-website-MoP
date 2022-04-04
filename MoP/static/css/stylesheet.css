@@ -131,7 +131,7 @@ img {
 .aboutpas{
     padding-top: 100px;
     padding-left: 60px;
-    padding-bottom: 80px;
+    padding-bottom: 0px;
 }
 
 .aboutpas h3{
@@ -149,7 +149,7 @@ img {
 
 .aboutgame {
     padding-left: 100px;
-    padding-top: 0;
+    padding-top: 100px;
     padding-bottom: 40px;
 }
 
@@ -159,11 +159,59 @@ img {
 
 .aboutgame p{
     width: 480px;
-    font-size: 18px;
+    font-size: 19px;
+}
+ /* Flechas animadas en página ABOUT THE GAME */
+.arrows {
+	width: 60px;
+	height: 72px;
+	position: absolute;
+	left: 50%;
+	margin-left: -30px;
+	bottom: 37px;
+}
+
+.arrows path {
+	stroke: #e3b00a;
+	fill: transparent;
+	stroke-width: 2.5px;	
+	animation: arrow 4s infinite;
+	-webkit-animation: arrow 4s infinite; 
+}
+
+@keyframes arrow {
+    0% {opacity:0}
+    40% {opacity:1}
+    80% {opacity:0}
+    100% {opacity:0}
+}
+
+@-webkit-keyframes arrow{
+    0% {opacity:0}
+    40% {opacity:1}
+    80% {opacity:0}
+    100% {opacity:0}
+}
+
+.arrows path.a1 {
+	animation-delay:-1s;
+	-webkit-animation-delay:-1s; 
+}
+
+/* Modificaciones para chrome y safari */
+
+.arrows path.a2 {
+	animation-delay:-0.5s;
+	-webkit-animation-delay:-0.5s; 
+}
+
+.arrows path.a3 {	
+	animation-delay:0s;
+	-webkit-animation-delay:0s; 
 }
 
 .flex-child .gameslide {
-    padding-top: 10px;
+    padding-top: 180px;
     padding-left: 70px;
 }
 
@@ -277,17 +325,6 @@ footer {
 	padding: 25px 25px;
 	color: white;
 }
-  
-  
-  
-  
-  
-  
-
-  
 
 
 
-
-
-  

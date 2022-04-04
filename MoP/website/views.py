@@ -13,6 +13,10 @@ def characters(request):
 	
 def about(request):
 	return render(request, 'about.html')
+
+def videogame(request):
+	return render(request, 'videogame.html')
 	
 def play(request):
 	return render(request, 'play.html')
+
