@@ -25,6 +25,7 @@ $(document).ready(function(){
 	};
 });
 
+
 $( function() {
     function runEffect(slide) {
       // Run the effect
@@ -42,6 +43,7 @@ $( function() {
       runEffect(".taima");
     });
 });
+
 
 // Funcion para dropear datos de personajes
 // $( function() {

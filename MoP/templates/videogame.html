@@ -11,6 +11,24 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="{% static 'javascript/script.js' %}"></script>
 	<script src="https://kit.fontawesome.com/a58ac90e93.js" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+		google.charts.load('current', {
+        'packages':['geochart'],
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable({{values|safe}});
+
+        var options = {};
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+        chart.draw(data, options);
+      }
+		</script>
 </head>
 <body>
 
@@ -142,12 +160,39 @@
 		</div>
 	</section>
 
-	<section id="leaderboard">
+	<section id="leader_chart">
 		<div class="container">
 			<div class="leaderboardbox">
 				<h2> LEADERBOARD </h2>
 				<hr>
-				<img class="leaderboard" src="{% static 'img/leaderboard.webp' %}">
+				<div class="container-wrap">
+					<section id="leaderboard">
+						<nav class="ladder-nav">
+							<div class="ladder-title">
+							<h1>Top Players</h1>
+							</div>
+							<div class="ladder-search">
+								<input type="text" id="search-leaderboard" class="live-search-box" placeholder="Search Score, Player..." />
+							</div>
+						</nav>
+						<table id="rankings" class="leaderboard-results" width="100%">
+							<thead>
+								<tr>
+									<th>Rank</th>
+									<th>Username</th>
+									<th>Country</th>
+									<th>Quiz ID</th>
+									<th>Score</th>
+								</tr>
+							</thead>
+							<tbody>
+								<script type = "text/javascript">  
+									loadRankings()   
+									populateRankings()
+									</script>  
+							</tbody>
+						</table>
+					</section>
 			</div>
 		</div>
 	</section>
@@ -167,7 +212,7 @@
 			<div class="worldbox">
 				<h2> FRIENDS AROUND THE WORLD </h2>
 				<hr>
-				<img class="worldstats" src="{% static 'img/worldstats.png' %}">
+				<div id="regions_div" style="width: 900px; height: 500px;"></div>
 			</div>
 		</div>
 	</section>
