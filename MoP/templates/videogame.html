@@ -29,6 +29,23 @@
         chart.draw(data, options);
       }
 		</script>
+    <script type="text/javascript">
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+  
+		function drawChart() {
+  
+		  var data = google.visualization.arrayToDataTable({{values|safe}});
+  
+		  var options = {
+			title: 'Meet your new friends form all over the world'
+		  };
+  
+		  var chart = new google.visualization.PieChart(document.getElementById('regionsPie_div'));
+  
+		  chart.draw(data, options);
+		}
+	  </script>
 </head>
 <body>
 
@@ -213,6 +230,7 @@
 				<h2> FRIENDS AROUND THE WORLD </h2>
 				<hr>
 				<div id="regions_div" style="width: 900px; height: 500px;"></div>
+				<div id="regionsPie_div" style="width: 900px; height: 500px;"></div>
 			</div>
 		</div>
 	</section>
