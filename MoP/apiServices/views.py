@@ -92,7 +92,7 @@ def world_stats(request):
 	for r in rows:
 		d = {}
 		d['Country'] = r[0]
-		d['Players'] = r[1]
+		d['Total Players'] = r[1]
 		listaSalida.append(d)
 	
 	j = dumps(listaSalida)
