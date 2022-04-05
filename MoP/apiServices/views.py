@@ -8,30 +8,6 @@ from json import dumps, load, loads
 def index(request):
 	return HttpResponse("<h1>Hola desde Django!</h1>")
 
-# user_info GET message
-# Gives a json file with UserID, Username, HashPwd, Country & Name of a user
-# Needs following format  =>  ?UserID=X
-# def user_info(request):
-# 	query = request.GET['UserID']
-# 	mydb = sqlite3.connect("db.sqlite3")
-# 	cur = mydb.cursor()
-# 	stringSQL = '''SELECT UserID, Username, HashPwd, Country, Name FROM User WHERE UserID = ?'''
-# 	rows = cur.execute(stringSQL,(query,))
-# 	r = rows.fetchone()
-		
-# 	lista_salida = []
-
-# 	if r == None:
-# 		raise Http404("User does not exist")
-# 	else:
-# 		d = {}
-# 		d["UserID"] = r[0]
-# 		d["Username"] = r[1]
-# 		d["HashPwd"] = r[2]	
-# 		d["Country"] = r[3]	
-# 		d["Name"] = r[4]
-# 		return JsonResponse(d)
-
 def user_info(request):
 	query = request.GET['UserID']
 	mydb = sqlite3.connect("db.sqlite3")
@@ -101,45 +77,6 @@ def quiz_info(request):
 		j = dumps(lista_salida)
 		return HttpResponse(j, content_type="text/json-comment-filtered")
 		
-# get_quiz_data GET
-# 
-def get_quiz_data(request):
-	query = request.GET['UserID']
-	mydb = sqlite3.connect("db.sqlite3")
-	cur = mydb.cursor()
-	# Querry de acceso a datos
-	stringSQL = '''
-	SELECT QuestionID, Correct
-  	FROM QuestionGame
-	WHERE QuizID IN (
-		SELECT QuizID
-		FROM QuestionGame
-		WHERE GameID IN (
-			SELECT GameID
-			FROM GameResume
-			WHERE UserID = ?
-		)
- 	)'''
-	rows = cur.execute(stringSQL,(query,))
-	lista_salida = []
-	r = rows.fetchone()
-
-	if r == None:
-		raise Http404("User does not have any saved games")
-	else:
-		d = {}
-		d["QuestionID"] = r[0]
-		d["Correct"] = r[1]
-		lista_salida.append(d)
-		for r in rows:
-			d = {}
-			d["QuestionID"] = r[0]
-			d["Correct"] = r[1]
-			lista_salida.append(d)
-			
-		j = dumps(lista_salida)
-		return HttpResponse(j, content_type="text/json-comment-filtered")
-
 # get_games GET message
 # Gives a json file with all the GameResume objects GameID, UserId, Difficulty, Checkpoint, DateCreated and Seconds
 def get_games(request):
@@ -163,19 +100,87 @@ def get_games(request):
 	else:
 		# First result data
 		d = {}
-		d["QuestionID"] = r[0]
-		d["QuestionTxt"] = r[1]
-		d["TimesFailed"] = r[2]	
-		d["TimesCorrect"] = r[3]
+		d["GameID"] = r[0]
+		d["Difficulty"] = r[1]
+		d["Checkpoint"] = r[2]
+		d["DateCreate"] = r[3]
+		d["Seconds"] = r[4]
 		lista_salida.append(d)
 		# Data from next results
 		for r in rows:
 			d = {}
-			d["QuestionID"] = r[0]
-			d["QuestionTxt"] = r[1]
-			d["TimesFailed"] = r[2]	
-			d["TimesCorrect"] = r[3]
+			d["GameID"] = r[0]
+			d["Difficulty"] = r[1]
+			d["Checkpoint"] = r[2]
+			d["DateCreate"] = r[3]
+			d["Seconds"] = r[4]
 			lista_salida.append(d)
 		# Parse to JSON
 		j = dumps(lista_salida)
 		return HttpResponse(j, content_type="text/json-comment-filtered")
+
+# get_quiz_data GET
+# 
+def get_quiz_data(request):
+	query = request.GET['UserID']
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+	stringSQL = '''
+	SELECT GameID
+	FROM GameResume
+	WHERE UserID = ?
+	'''
+	# Getting GameIds of user
+	gameIds = cur.execute(stringSQL,(query,))
+	gameArr = []
+
+	for gameId in gameIds:
+		quizArr = []
+		stringSQL = '''
+		SELECT QuizPlayID 
+		FROM QuizGame 
+		WHERE GameID = ?
+		'''
+		# Getting quizPlayIds of user
+		quizPlayIds = cur.execute(stringSQL,(gameId[0],))
+		# Creando diccionario
+		dictGames = {}
+
+		for quizPlayId in quizPlayIds:
+			questionArr = []
+			stringSQL = '''
+			SELECT QuestionID, Correct
+			FROM QuestionGame
+			WHERE QuizPlayID = ?
+			'''
+			# Obteniendo pregunta
+			questions = cur.execute(stringSQL,(quizPlayId[0],))
+			# Creando diccionario
+			dictQuizes = {}
+			dictQuestions = {}
+			for question in questions:
+				print(question[0])
+				dictQuestions["questionID"] = question[0]
+				dictQuestions["correct"] = question[1]
+				questionArr.append(dictQuestions)
+
+			#Query para obtener 
+			stringSQL = '''
+			SELECT QuizID
+			FROM QuizGame
+			WHERE QuizPlayID = ?
+			'''
+			# Obteniendo pregunta
+			quiz = cur.execute(stringSQL,(quizPlayId[0],))
+			quizId = quiz.fetchone()
+
+			dictQuizes["quizID"] = quizId[0]
+			dictQuizes["questions"] = questionArr
+			quizArr.append(dictQuizes)
+
+		dictGames["gameID"] = gameId[0]
+		dictGames["quizes"] = quizArr
+		gameArr.append(dictGames)
+
+	j = dumps(gameArr)
+	return HttpResponse(j, content_type="text/json-comment-filtered")
