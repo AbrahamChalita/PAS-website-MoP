@@ -41,13 +41,17 @@ def quiz_info(request):
 	FROM Question 
 	WHERE QuestionID IN
 	(
-		SELECT QuestionID 
-		FROM QuestionGame 
-		WHERE GameID IN
-		(
-			SELECT GameID 
-			FROM GameResume 
-			WHERE UserID = ?
+		Select QuestionID
+		FROM QuestionGame
+		Where QuizPlayID IN (
+			SELECT QuizPlayID 
+			FROM QuizGame 
+			WHERE GameID IN
+			(
+				SELECT GameID 
+				FROM GameResume 
+				WHERE UserID = ?
+			)
 		)
 	)'''
 	rows = cur.execute(stringSQL,(query,))
@@ -159,10 +163,10 @@ def get_quiz_data(request):
 			dictQuizes = {}
 			dictQuestions = {}
 			for question in questions:
-				print(question[0])
 				dictQuestions["questionID"] = question[0]
 				dictQuestions["correct"] = question[1]
 				questionArr.append(dictQuestions)
+				print(questionArr)
 
 			#Query para obtener 
 			stringSQL = '''
