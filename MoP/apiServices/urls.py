@@ -6,4 +6,6 @@ from . import views
 
 urlpatterns = [
 	path('', views.main, name='main'),
+	path('GameResumeList', views.GameResumeList, name='GameResumeList'),
+	path('GameResumesUser', views.GameResumesUser, name='GameResumesUser'),
 ]
