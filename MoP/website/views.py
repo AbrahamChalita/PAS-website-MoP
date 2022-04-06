@@ -17,6 +17,7 @@ def about(request):
 	return render(request, 'about.html')
 
 def videogame(request):
+    # here starts the code for world stats
 	h_var = 'Country'
 	v_var = 'Friends'
 
@@ -37,13 +38,9 @@ def videogame(request):
 	v_var_JSON = dumps(v_var)
 	modified_data = dumps(data)
 
-	quizId = "Quiz ID"
-	Score = "Score"
-	UserId = "User ID"
-	Username = "Username"
-	country = "Country"
+	# here starts the code for leaderboard
 
-	query_leaderboard ='''SELECT QuizGame.QuizID, QuizGame.Score, GameResume.UserID, 
+	query_leaderboard ='''SELECT QuizGame.QuizID, QuizGame.Score, 
 		(SELECT country from User where UserID = GameResume.UserID),
 		(SELECT username from User where UserID = GameResume.UserID) from QuizGame
 		INNER JOIN GameResume on QuizGame.GameID = GameResume.GameID 
@@ -51,13 +48,33 @@ def videogame(request):
 	'''
 	
 	rows2 = curr.execute(query_leaderboard)
-	data_leaderboard = [[quizId, Score, UserId, Username, country]]
+	data_leaderboard = []
 
+	counter = 0
 	for x in rows2:
-		data_leaderboard.append([x[0], x[1], x[2], x[3], x[4]])
+			counter += 1
+			data_leaderboard.append([counter, x[0], x[1], x[2], x[3]])
 
-	leaders_data = json.dumps(data_leaderboard)
-	return render(request,'videogame.html',{'values':modified_data,'h_title':h_var_JSON,'v_title':v_var_JSON, 'values2': leaders_data})
+	# Here starts code for player count stats
+	query_totalplayers ='''SELECT (
+		SELECT COUNT (DISTINCT UserID) from GameResume) 
+		as total_players, 
+		(SELECT SUM(Seconds) as total_playtime from GameResume) 
+		as total_playtime
+	'''
+	v_player = "Players"
+	v_numbers = "Total"
+	rows3 = curr.execute(query_totalplayers)
+	data_players = [[v_player, v_numbers]]
+	data_total = 0
+ 
+	for y in rows3:
+			data_players.append(["Players", y[0],])
+			data_total = y[0]
+	
+	modified_players = dumps(data_players)
+		
+	return render(request,'videogame.html',{'values':modified_data,'h_title':h_var_JSON,'v_title':v_var_JSON, 'values2': data_leaderboard, 'values3': modified_players, 'values4': data_total})
 	#return render(request, 'videogame.html')
 	
 def play(request):

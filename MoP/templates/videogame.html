@@ -46,6 +46,24 @@
 		  chart.draw(data, options);
 		}
 	  </script>
+
+	  <script>
+		google.charts.load('current', {'packages':['corechart']});
+      	google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+			var data = google.visualization.arrayToDataTable({{values3 | safe}});
+
+			var options = {
+			title: 'Player Count',
+			vAxis: {minValue: 0, maxValue: 10},
+			};
+
+			var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+			chart.draw(data, options);
+		}
+
+	  </script>
 </head>
 <body>
 
@@ -145,12 +163,13 @@
 							<h2>COMMUNITY & TEAM</h2>
 							<hr>
 							<ul>
-								<li> Players right now - <strong>9, 272</strong></li>
+								<li> Players right now - <strong>{{values4}}</strong></li>
 								<li> 24 hour peak - <strong>12, 935</strong></li>
 								<li>all time peak - <strong>272, 586</strong></li>
 								<li>Total played time - <strong>489d, 19h. 23min</strong></li>
 							</ul>
-							<img class="graph" src="{% static 'img/graph.png' %}">
+
+							<div id="chart_div" style="width: 100%; height: 500px;"></div>
 						</div>
 					</div>
 
@@ -195,23 +214,24 @@
 						<table id="rankings" class="leaderboard-results" width="100%">
 							<thead>
 								<tr>
-									<th>Rank</th>
-									<th>Username</th>
-									<th>Country</th>
+									<th>RANK</th>
 									<th>Quiz ID</th>
 									<th>Score</th>
+									<th>Country</th>
+									<th>Username</th>
 								</tr>
 							</thead>
 							<tbody> 
+								{% for d in values2 %}
+									<tr>
+									{% for x in d %}
+										<td>{{x}}</td>
+									{% endfor %}
+									</tr>
+								{% endfor %}
 							</tbody>
 						</table>
 					</section>
-
-					{% for d in values2 %}
-						{{d}} 
-					{% endfor %}
-
-					
 			</div>
 		</div>
 	</section>
