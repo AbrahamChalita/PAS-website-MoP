@@ -202,14 +202,16 @@
 									<th>Score</th>
 								</tr>
 							</thead>
-							<tbody>
-								<script type = "text/javascript">  
-									loadRankings()   
-									populateRankings()
-									</script>  
+							<tbody> 
 							</tbody>
 						</table>
 					</section>
+
+					{% for d in values2 %}
+						{{d}} 
+					{% endfor %}
+
+					
 			</div>
 		</div>
 	</section>

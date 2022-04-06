@@ -36,6 +36,7 @@ def leaderboard_stats(request):
 	mydb = sqlite3.connect("db.sqlite3")
 	curr = mydb.cursor()
 	stringSQL ='''SELECT QuizGame.QuizID, QuizGame.Score, GameResume.UserID, 
+		(SELECT country from User where UserID = GameResume.UserID),
 		(SELECT username from User where UserID = GameResume.UserID) from QuizGame
 		INNER JOIN GameResume on QuizGame.GameID = GameResume.GameID 
 		ORDER by Score DESC
@@ -49,6 +50,7 @@ def leaderboard_stats(request):
 		d['Score'] = r[1]
 		d['UserId'] = r[2]
 		d['Username'] = r[3]
+		d['Country'] = r[4]
 		listaSalida.append(d)
 	
 	j = dumps(listaSalida)
@@ -73,26 +75,6 @@ def instrument_stats(request):
 		d['Playtime'] = r[1]
 		d['Description'] = r[2]
 		d['Username'] = r[3]
-		listaSalida.append(d)
-	
-	j = dumps(listaSalida)
-	return HttpResponse(j, content_type="text/json-comment-filtered")
-
-# Gives json file with number of players per registered country api/world_stats
-def world_stats(request):
-	mydb = sqlite3.connect("db.sqlite3")
-	curr = mydb.cursor()
-	stringSQL ='''SELECT Country, COUNT(Country)
-		FROM User
-		GROUP BY Country
-	'''
-	rows = curr.execute(stringSQL)
-	listaSalida = []
-
-	for r in rows:
-		d = {}
-		d['Country'] = r[0]
-		d['Total Players'] = r[1]
 		listaSalida.append(d)
 	
 	j = dumps(listaSalida)
