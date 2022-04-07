@@ -28,6 +28,51 @@ def user_info(request):
 		d["country"] = r[3]
 		return JsonResponse(d)
 
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+def unity2(request):
+	body_unicode = request.body.decode('utf-8')
+	body = loads(body_unicode)
+	print(body)
+	
+	query = body['userName']
+	query = body['pwd']
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+	stringSQL = '''SELECT Username, UserID, HashPwd, Country FROM User WHERE Username = ?'''
+	rows = cur.execute(stringSQL,(query,))
+	r = rows.fetchone()
+
+	if r == None:
+		raise Http404("User does not exist or credentials invalid")
+	else:
+		d = {}
+		d["userName"] = r[0]
+		d["id"] = r[1]
+		d["pwd"] = r[2]
+		d["country"] = r[3]
+		return JsonResponse(d)
+
+# Registro de nuuevo usuario a la base de datos
+@csrf_exempt
+def unity3(request):
+	body_unicode = request.body.decode('utf-8')
+	body = loads(body_unicode) # convierte en diccionario el body del POST
+
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+	stringSQL = '''
+	INSERT INTO User (Name, Username, HashPwd, Country, Email) 
+	VALUES (?,?,?,?,?)
+	'''
+
+	cur.execute(stringSQL,(body['name'], body['userName'], body['pwd'], body['country'], body['email'],))
+
+	mydb.commit()
+	mydb.close()
+	
+	return unity2(request)
+
 # quiz_info GET message
 # Gives a json file with UserID, Username, HashPwd, Country & Name of a user
 # Needs following format  =>  ?UserID=X
@@ -140,18 +185,20 @@ def get_quiz_data(request):
 
 	for gameId in gameIds:
 		quizArr = []
+		# Creando diccionario
+		dictGames = {}
 		stringSQL = '''
-		SELECT QuizPlayID 
+		SELECT QuizPlayID
 		FROM QuizGame 
 		WHERE GameID = ?
 		'''
 		# Getting quizPlayIds of user
 		quizPlayIds = cur.execute(stringSQL,(gameId[0],))
-		# Creando diccionario
-		dictGames = {}
 
 		for quizPlayId in quizPlayIds:
 			questionArr = []
+			# Creando diccionario
+			dictQuizes = {}
 			stringSQL = '''
 			SELECT QuestionID, Correct
 			FROM QuestionGame
@@ -159,10 +206,8 @@ def get_quiz_data(request):
 			'''
 			# Obteniendo pregunta
 			questions = cur.execute(stringSQL,(quizPlayId[0],))
-			# Creando diccionario
-			dictQuizes = {}
-			dictQuestions = {}
 			for question in questions:
+				dictQuestions = {}
 				dictQuestions["questionID"] = question[0]
 				dictQuestions["correct"] = question[1]
 				questionArr.append(dictQuestions)
