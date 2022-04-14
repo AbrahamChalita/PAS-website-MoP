@@ -234,3 +234,42 @@ def get_quiz_data(request):
 
 	j = dumps(gameArr)
 	return HttpResponse(j, content_type="text/json-comment-filtered")
+
+def quiz_request(request):
+	query = request.GET['QuizID']
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+	stringSQL = '''
+	SELECT QuestionTxt, QuestionID
+	FROM Question
+	WHERE QuizID = ?
+	'''
+	questions = cur.execute(stringSQL,(query,))
+	
+	questionArr = []
+	for question in questions:
+		d = {}
+		d["questionTxt"] = question[0]
+		d["options"] =  question[1]
+		questionArr.append(d)
+	
+	for question in questionArr:
+		stringSQL = '''
+		SELECT OptionTxt, Correct
+		FROM QuestionOptions
+		WHERE QuestionID = ?
+		'''
+		options = cur.execute(stringSQL,(question['options'],))
+		optionArr = []
+		for option in options:
+			d2 = {}
+			d2["optionTxt"] = option[0]
+			d2["correct"] = option[1]
+			optionArr.append(d2)
+		question['options'] = optionArr
+
+	res = {}
+	res['quiz'] = questionArr
+
+	j = dumps(res)
+	return HttpResponse(j, content_type="text/json-comment-filtered")
