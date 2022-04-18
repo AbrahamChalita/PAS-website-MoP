@@ -17,4 +17,5 @@ urlpatterns = [
 	path('save_quiz', views.save_quiz, name='save_quiz'),
 	path('save_level', views.save_level, name='save_level'),
 	path('change_userName', views.change_userName, name='change_userName'),
+	path('instrument_stats', views.instrument_stats, name='instrument_stats'),
 ]
