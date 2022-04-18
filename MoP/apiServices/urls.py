@@ -18,4 +18,6 @@ urlpatterns = [
 	path('save_level', views.save_level, name='save_level'),
 	path('change_userName', views.change_userName, name='change_userName'),
 	path('instrument_stats', views.instrument_stats, name='instrument_stats'),
+	path('GameResumeList', views.GameResumeList, name='GameResumeList'),
+	path('GameResumesUser', views.GameResumesUser, name='GameResumesUser'),
 ]
