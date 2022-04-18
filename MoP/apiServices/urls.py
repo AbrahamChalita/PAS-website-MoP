@@ -13,4 +13,7 @@ urlpatterns = [
 	path('get_games', views.get_games, name='get_games'),
 	path('get_quiz_data', views.get_quiz_data, name='get_quiz_data'),
 	path('quiz_request', views.quiz_request, name='quiz_request'),
+	path('save_quiz', views.save_quiz, name='save_quiz'),
+	path('save_level', views.save_level, name='save_level'),
+	path('change_userName', views.change_userName, name='change_userName'),
 ]

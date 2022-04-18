@@ -16,7 +16,7 @@ def user_info(request):
 	stringSQL = '''SELECT Username, UserID, HashPwd, Country FROM User WHERE UserID = ?'''
 	rows = cur.execute(stringSQL,(query,))
 	r = rows.fetchone()
-		
+
 	lista_salida = []
 
 	if r == None:
@@ -40,7 +40,7 @@ def unity2(request):
 	query = body['pwd']
 	mydb = sqlite3.connect("db.sqlite3")
 	cur = mydb.cursor()
-	stringSQL = '''SELECT Username, UserID, HashPwd, Country FROM User WHERE Username = ?'''
+	stringSQL = '''SELECT Username, UserID, HashPwd, Country FROM User WHERE HashPwd = ?'''
 	rows = cur.execute(stringSQL,(query,))
 	r = rows.fetchone()
 
@@ -249,6 +249,7 @@ def quiz_request(request):
 	questionArr = []
 	for question in questions:
 		d = {}
+		d["questionID"] = question[1]
 		d["questionTxt"] = question[0]
 		d["options"] =  question[1]
 		questionArr.append(d)
@@ -273,3 +274,105 @@ def quiz_request(request):
 
 	j = dumps(res)
 	return HttpResponse(j, content_type="text/json-comment-filtered")
+
+@csrf_exempt
+def save_quiz(request):
+	body_unicode = request.body.decode('utf-8')
+	body = loads(body_unicode) # convierte en diccionario el body del POST
+
+	# Guardando score del QuizPlay en la base de datos
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+	stringSQL = '''
+	INSERT INTO QuizGame (QuizID, GameID, Score) 
+	VALUES (?,?,?)
+	'''
+	cur.execute(stringSQL,(body['QuizID'], body['GameID'], body['Score'],))
+
+	# Obteniendo QuizPlayID del registro
+	stringSQL = '''
+	SELECT QuizPlayID
+	FROM QuizGame
+	ORDER BY QuizPlayID DESC
+	LIMIT 1
+	'''
+	quizPlayId = cur.execute(stringSQL)
+	d = {}
+	d['QuizPlayID'] = quizPlayId.fetchone()[0]
+
+	# Guardando respuesta a cada pregunta en la base de datos
+	stringSQL = '''
+	INSERT INTO QuestionGame (QuizPlayID, QuestionID, Correct) 
+	VALUES (?,?,?)
+	'''
+	for i in range(len(body['QuestionID'])):
+		cur.execute(stringSQL,(d['QuizPlayID'], body['QuestionID'][i], body['Correct'][i],))
+
+	j = dumps(d)
+	mydb.commit()
+	mydb.close()
+	return HttpResponse(j, content_type="text/json-comment-filtered")
+
+@csrf_exempt
+def save_level(request):
+	body_unicode = request.body.decode('utf-8')
+	body = loads(body_unicode) # convierte en diccionario el body del POST
+
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+	stringSQL = '''
+	INSERT INTO LevelGame (LevelID, GameID, Score, Playtime) 
+	VALUES (?,?,?,?)
+	'''
+
+	cur.execute(stringSQL,(body['LevelID'], body['GameID'], body['Score'], body['Playtime'],))
+
+	mydb.commit()
+	mydb.close()
+	cur = mydb.cursor()
+	stringSQL = '''
+	SELECT LevelPlayID
+	FROM LevelGame
+	ORDER BY LevelPlayID DESC
+	LIMIT 1
+	'''
+	quizPlayId = cur.execute(stringSQL)
+
+	d = {}
+	d["LevelPlayID"] = quizPlayId.fetchone()[0]
+
+	j = dumps(d)
+	return HttpResponse(j, content_type="text/json-comment-filtered")
+
+@csrf_exempt
+def change_userName(request):
+	body_unicode = request.body.decode('utf-8')
+	body = loads(body_unicode) # convierte en diccionario el body del POST
+
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+	stringSQL = '''
+	UPDATE User
+	SET Username = ?
+	WHERE UserID = ?
+	'''
+
+	cur.execute(stringSQL,(body['Username'], body['UserID'],))
+
+	query = body['UserID']
+	stringSQL = '''SELECT Username, UserID, HashPwd, Country FROM User WHERE UserID = ?'''
+	rows = cur.execute(stringSQL,(query,))
+	r = rows.fetchone()
+
+	if r == None:
+		raise Http404("User does not exist")
+	else:
+		d = {}
+		d["userName"] = r[0]
+		d["id"] = r[1]
+		d["pwd"] = r[2]	
+		d["country"] = r[3]
+	
+	mydb.commit()
+	mydb.close()
+	return JsonResponse(d)
