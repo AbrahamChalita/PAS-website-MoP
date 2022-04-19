@@ -6,7 +6,10 @@ from django.shortcuts import render
 from json import dumps, load, loads
 from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
+################
+# GET Messages #
+################
+
 def main(request):
 	return render(request, 'main.html')
 
@@ -75,50 +78,6 @@ def user_info(request):
 		d["pwd"] = r[2]	
 		d["country"] = r[3]
 		return JsonResponse(d)
-
-@csrf_exempt
-def unity2(request):
-	body_unicode = request.body.decode('utf-8')
-	body = loads(body_unicode)
-	print(body)
-	
-	query = body['userName']
-	query = body['pwd']
-	mydb = sqlite3.connect("db.sqlite3")
-	cur = mydb.cursor()
-	stringSQL = '''SELECT Username, UserID, HashPwd, Country FROM User WHERE HashPwd = ?'''
-	rows = cur.execute(stringSQL,(query,))
-	r = rows.fetchone()
-
-	if r == None:
-		raise Http404("User does not exist or credentials invalid")
-	else:
-		d = {}
-		d["userName"] = r[0]
-		d["id"] = r[1]
-		d["pwd"] = r[2]
-		d["country"] = r[3]
-		return JsonResponse(d)
-
-# Registro de nuuevo usuario a la base de datos
-@csrf_exempt
-def unity3(request):
-	body_unicode = request.body.decode('utf-8')
-	body = loads(body_unicode) # convierte en diccionario el body del POST
-
-	mydb = sqlite3.connect("db.sqlite3")
-	cur = mydb.cursor()
-	stringSQL = '''
-	INSERT INTO User (Name, Username, HashPwd, Country, Email) 
-	VALUES (?,?,?,?,?)
-	'''
-
-	cur.execute(stringSQL,(body['name'], body['userName'], body['pwd'], body['country'], body['email'],))
-
-	mydb.commit()
-	mydb.close()
-	
-	return unity2(request)
 
 # quiz_info GET message
 # Gives a json file with UserID, Username, HashPwd, Country & Name of a user
@@ -201,7 +160,9 @@ def get_games(request):
 		d["Checkpoint"] = r[2]
 		d["DateCreate"] = r[3]
 		d["Seconds"] = r[4]
-		lista_salida.append(d)
+		d2 = {}
+		d2['GameResume'] = d
+		lista_salida.append(d2)
 		# Data from next results
 		for r in rows:
 			d = {}
@@ -210,13 +171,17 @@ def get_games(request):
 			d["Checkpoint"] = r[2]
 			d["DateCreate"] = r[3]
 			d["Seconds"] = r[4]
-			lista_salida.append(d)
+			d2 = {}
+			d2['GameResume'] = d
+			lista_salida.append(d2)
+
+		d3 = {}
+		d3['Games'] = lista_salida
 		# Parse to JSON
-		j = dumps(lista_salida)
+		j = dumps(d3)
 		return HttpResponse(j, content_type="text/json-comment-filtered")
 
 # get_quiz_data GET
-# 
 def get_quiz_data(request):
 	query = request.GET['UserID']
 	mydb = sqlite3.connect("db.sqlite3")
@@ -320,6 +285,94 @@ def quiz_request(request):
 
 	j = dumps(res)
 	return HttpResponse(j, content_type="text/json-comment-filtered")
+
+#################
+# POST Messages #
+#################
+
+@csrf_exempt
+def unity2(request):
+	body_unicode = request.body.decode('utf-8')
+	body = loads(body_unicode)
+	print(body)
+	
+	query = body['userName']
+	query = body['pwd']
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+	stringSQL = '''SELECT Username, UserID, HashPwd, Country FROM User WHERE HashPwd = ?'''
+	rows = cur.execute(stringSQL,(query,))
+	r = rows.fetchone()
+
+	if r == None:
+		raise Http404("User does not exist or credentials invalid")
+	else:
+		d = {}
+		d["userName"] = r[0]
+		d["id"] = r[1]
+		d["pwd"] = r[2]
+		d["country"] = r[3]
+		return JsonResponse(d)
+
+# Registro de nuuevo usuario a la base de datos
+@csrf_exempt
+def unity3(request):
+	body_unicode = request.body.decode('utf-8')
+	body = loads(body_unicode) # convierte en diccionario el body del POST
+
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+	stringSQL = '''
+	INSERT INTO User (Name, Username, HashPwd, Country, Email) 
+	VALUES (?,?,?,?,?)
+	'''
+
+	cur.execute(stringSQL,(body['name'], body['userName'], body['pwd'], body['country'], body['email'],))
+
+	mydb.commit()
+	mydb.close()
+	
+	return unity2(request)
+
+from datetime import datetime
+@csrf_exempt
+def new_game(request):
+	body_unicode = request.body.decode('utf-8')
+	body = loads(body_unicode) # convierte en diccionario el body del POST
+
+	# Guardando score del QuizPlay en la base de datos
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+	stringSQL = '''
+	INSERT INTO GameResume (UserID, Difficulty, Checkpoint, DateCreate, Seconds) 
+	VALUES (?,?,?,?,?)
+	'''
+
+	# current date and time
+	timestamp = datetime.now().replace(microsecond=0).isoformat(' ')
+	cur.execute(stringSQL,(body['userID'],body['difficulty'],0,timestamp,0,))
+
+	# Obteniendo QuizPlayID del registro
+	stringSQL = '''
+	SELECT GameID, UserID, Difficulty, Checkpoint, DateCreate, Seconds
+	FROM GameResume
+	ORDER BY GameID DESC
+	LIMIT 1
+	'''
+	gameId = cur.execute(stringSQL)
+	game = gameId.fetchone()
+	d = {}
+	d['gameID'] = game[0]
+	d['userID'] = game[1]
+	d['difficulty'] = game[2]
+	d['checkpoint'] = game[3]
+	d['dateCreated'] = game[4]
+	d['seconds'] = game[5]
+
+	j = dumps(d)
+	mydb.commit()
+	mydb.close()
+	return HttpResponse(j, content_type="text/json-comment-filtered")	
 
 @csrf_exempt
 def save_quiz(request):
