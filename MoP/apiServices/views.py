@@ -155,28 +155,28 @@ def get_games(request):
 	else:
 		# First result data
 		d = {}
-		d["GameID"] = r[0]
-		d["Difficulty"] = r[1]
-		d["Checkpoint"] = r[2]
-		d["DateCreate"] = r[3]
-		d["Seconds"] = r[4]
-		d2 = {}
-		d2['GameResume'] = d
-		lista_salida.append(d2)
+		d["gameID"] = r[0]
+		d["difficulty"] = r[1]
+		d["checkpoint"] = r[2]
+		d["dateCreate"] = r[3]
+		d["seconds"] = r[4]
+		# d2 = {}
+		# d2['GameResume'] = d
+		lista_salida.append(d)
 		# Data from next results
 		for r in rows:
 			d = {}
-			d["GameID"] = r[0]
-			d["Difficulty"] = r[1]
-			d["Checkpoint"] = r[2]
-			d["DateCreate"] = r[3]
-			d["Seconds"] = r[4]
-			d2 = {}
-			d2['GameResume'] = d
-			lista_salida.append(d2)
+			d["gameID"] = r[0]
+			d["difficulty"] = r[1]
+			d["checkpoint"] = r[2]
+			d["dateCreate"] = r[3]
+			d["seconds"] = r[4]
+			# d2 = {}
+			# d2['GameResume'] = d
+			lista_salida.append(d)
 
 		d3 = {}
-		d3['Games'] = lista_salida
+		d3['games'] = lista_salida
 		# Parse to JSON
 		j = dumps(d3)
 		return HttpResponse(j, content_type="text/json-comment-filtered")
@@ -458,20 +458,8 @@ def change_userName(request):
 
 	cur.execute(stringSQL,(body['Username'], body['UserID'],))
 
-	query = body['UserID']
-	stringSQL = '''SELECT Username, UserID, HashPwd, Country FROM User WHERE UserID = ?'''
-	rows = cur.execute(stringSQL,(query,))
-	r = rows.fetchone()
+	d = {}
 
-	if r == None:
-		raise Http404("User does not exist")
-	else:
-		d = {}
-		d["userName"] = r[0]
-		d["id"] = r[1]
-		d["pwd"] = r[2]	
-		d["country"] = r[3]
-	
 	mydb.commit()
 	mydb.close()
 	return JsonResponse(d)
