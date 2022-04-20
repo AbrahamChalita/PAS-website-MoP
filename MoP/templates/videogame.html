@@ -11,6 +11,59 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="{% static 'javascript/script.js' %}"></script>
 	<script src="https://kit.fontawesome.com/a58ac90e93.js" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+		google.charts.load('current', {
+        'packages':['geochart'],
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable({{values|safe}});
+
+        var options = {};
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+        chart.draw(data, options);
+      }
+		</script>
+    <script type="text/javascript">
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+  
+		function drawChart() {
+  
+		  var data = google.visualization.arrayToDataTable({{values|safe}});
+  
+		  var options = {
+			title: 'Meet your new friends form all over the world'
+		  };
+  
+		  var chart = new google.visualization.PieChart(document.getElementById('regionsPie_div'));
+  
+		  chart.draw(data, options);
+		}
+	  </script>
+
+	  <script>
+		google.charts.load('current', {'packages':['corechart']});
+      	google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+			var data = google.visualization.arrayToDataTable({{values3 | safe}});
+
+			var options = {
+			title: 'Player Count',
+			vAxis: {minValue: 0, maxValue: 10},
+			};
+
+			var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+			chart.draw(data, options);
+		}
+
+	  </script>
 </head>
 <body>
 
@@ -110,12 +163,13 @@
 							<h2>COMMUNITY & TEAM</h2>
 							<hr>
 							<ul>
-								<li> Players right now - <strong>9, 272</strong></li>
+								<li> Players right now - <strong>{{values4}}</strong></li>
 								<li> 24 hour peak - <strong>12, 935</strong></li>
 								<li>all time peak - <strong>272, 586</strong></li>
 								<li>Total played time - <strong>489d, 19h. 23min</strong></li>
 							</ul>
-							<img class="graph" src="{% static 'img/graph.png' %}">
+
+							<div id="chart_div" style="width: 100%; height: 500px;"></div>
 						</div>
 					</div>
 
@@ -142,12 +196,42 @@
 		</div>
 	</section>
 
-	<section id="leaderboard">
+	<section id="leader_chart">
 		<div class="container">
 			<div class="leaderboardbox">
 				<h2> LEADERBOARD </h2>
 				<hr>
-				<img class="leaderboard" src="{% static 'img/leaderboard.webp' %}">
+				<div class="container-wrap">
+					<section id="leaderboard">
+						<nav class="ladder-nav">
+							<div class="ladder-title">
+							<h1>Top Players</h1>
+							</div>
+							<div class="ladder-search">
+								<input type="text" id="search-leaderboard" class="live-search-box" placeholder="Search Score, Player..." />
+							</div>
+						</nav>
+						<table id="rankings" class="leaderboard-results" width="100%">
+							<thead>
+								<tr>
+									<th>RANK</th>
+									<th>Quiz ID</th>
+									<th>Score</th>
+									<th>Country</th>
+									<th>Username</th>
+								</tr>
+							</thead>
+							<tbody> 
+								{% for d in values2 %}
+									<tr>
+									{% for x in d %}
+										<td>{{x}}</td>
+									{% endfor %}
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</section>
 			</div>
 		</div>
 	</section>
@@ -167,7 +251,8 @@
 			<div class="worldbox">
 				<h2> FRIENDS AROUND THE WORLD </h2>
 				<hr>
-				<img class="worldstats" src="{% static 'img/worldstats.png' %}">
+				<div id="regions_div" style="width: 900px; height: 500px;"></div>
+				<div id="regionsPie_div" style="width: 900px; height: 500px;"></div>
 			</div>
 		</div>
 	</section>
