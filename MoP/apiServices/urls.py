@@ -21,4 +21,6 @@ urlpatterns = [
 	path('instrument_stats', views.instrument_stats, name='instrument_stats'),
 	path('GameResumeList', views.GameResumeList, name='GameResumeList'),
 	path('GameResumesUser', views.GameResumesUser, name='GameResumesUser'),
+	path('quizes_played', views.quizes_played, name='quizes_played'),
+	path('score_by_quiz', views.score_by_quiz, name='score_by_quiz'),
 ]

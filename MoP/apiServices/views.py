@@ -1,5 +1,6 @@
 import re
 import sqlite3
+import string
 from django.http import HttpResponse, Http404, JsonResponse
 from django.template import loader
 from django.shortcuts import render
@@ -35,8 +36,6 @@ def progress_info(request):
 	good = 0
 	bad = 0
 	count = 0
-
-
 	
 	if r == None:
 		raise Http404("User does not have any saved games")
@@ -82,8 +81,6 @@ def user_info(request):
 		return JsonResponse(d)
 
 # quiz_info GET message
-# Gives a json file with UserID, Username, HashPwd, Country & Name of a user
-# Needs following format  =>  ?UserID=X
 def quiz_info(request):
 	query = request.GET['UserID']
 	mydb = sqlite3.connect("db.sqlite3")
@@ -184,6 +181,7 @@ def get_games(request):
 		return HttpResponse(j, content_type="text/json-comment-filtered")
 
 # get_quiz_data GET
+# Obtiene todos los datos de 
 def get_quiz_data(request):
 	query = request.GET['UserID']
 	mydb = sqlite3.connect("db.sqlite3")
@@ -288,9 +286,86 @@ def quiz_request(request):
 	j = dumps(res)
 	return HttpResponse(j, content_type="text/json-comment-filtered")
 
+def quizes_played(request):
+	query = request.GET['UserID']
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+
+	stringSQL = '''
+	SELECT QuizID
+	FROM QuizGame
+	WHERE GameID IN
+	(
+		SELECT GameID
+		FROM GameResume
+		WHERE UserID = ?
+	)
+	GROUP BY QuizID
+	'''
+
+	rows = cur.execute(stringSQL,(query,))
+	r = rows.fetchone()
+		
+	lista_salida = []
+	d = {}
+
+	if r == None:
+		raise Http404("User has not played any quizes.")
+	else:
+		# Agregando primer resultado de querry
+		lista_salida.append(r[0])
+		# Agregando demas resultados de quesrry si existen
+		for r in rows:
+			lista_salida.append(r[0])
+
+	d['quizes'] = lista_salida
+
+	j = dumps(d)
+	return HttpResponse(j, content_type="text/json-comment-filtered")
+
 #################
 # POST Messages #
 #################
+
+@csrf_exempt
+def score_by_quiz(request):
+	body_unicode = request.body.decode('utf-8')
+	body = loads(body_unicode)
+
+	print(body)
+	
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+
+	stringSQL = '''
+	SELECT Score
+	FROM QuizGame
+	JOIN GameResume
+				On QuizGame.GameID = GameResume.GameID
+	Join User
+				On User.UserID = GameResume.UserID
+				WHERE User.UserID = ? AND QuizGame.QuizID = ?
+	'''
+
+	rows = cur.execute(stringSQL,(body['userID'], body['quizID'],))
+	r = rows.fetchone()
+
+	lista_salida = []
+	d = {}
+
+	if r == None:
+		raise Http404("User has not played any quizes.")
+	else:
+		# Agregando primer resultado de querry
+		lista_salida.append(r[0])
+		# Agregando demas resultados de quesrry si existen
+		for r in rows:
+			lista_salida.append(r[0])
+
+	d['scores'] = lista_salida
+
+	j = dumps(d)
+	return HttpResponse(j, content_type="text/json-comment-filtered")
 
 @csrf_exempt
 def unity2(request):
@@ -465,6 +540,7 @@ def change_userName(request):
 	mydb.commit()
 	mydb.close()
 	return JsonResponse(d)
+
 # Gives json file most used instrument api/instrument_stats
 def instrument_stats(request):
 	mydb = sqlite3.connect("db.sqlite3")
