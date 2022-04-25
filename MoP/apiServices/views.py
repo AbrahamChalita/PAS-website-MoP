@@ -541,6 +541,27 @@ def change_userName(request):
 	mydb.close()
 	return JsonResponse(d)
 
+@csrf_exempt
+def update_checkpoint(request):
+	body_unicode = request.body.decode('utf-8')
+	body = loads(body_unicode) # convierte en diccionario el body del POST
+
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+	stringSQL = '''
+	UPDATE GameResume
+	SET Checkpoint = ?
+	WHERE GameID = ?
+	'''
+
+	cur.execute(stringSQL,(body['checkpoint'], body['gameID'],))
+
+	d = {}
+
+	mydb.commit()
+	mydb.close()
+	return JsonResponse(d)
+
 # Gives json file most used instrument api/instrument_stats
 def instrument_stats(request):
 	mydb = sqlite3.connect("db.sqlite3")
