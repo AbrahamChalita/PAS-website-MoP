@@ -27,10 +27,14 @@
 				</ul>
 			</nav>
 			<div class="header-content">
-					<button class="back" id="trailer" onclick="openVideo()">
+					<!--<button class="back" id="trailer" onclick="openVideo()">
 						<img src="{% static 'img/play-button.png' %}">
-					</button>
-            </div>
+					</button>-->
+					<video width="854" height="480	" controls autoplay>
+					  <source src="{% static "video/cuphead.mp4" %}" type="video/mp4">
+					  <source src="{% static "video/cuphead.ogg" %}" type="video/ogg">
+							Your browser does not support the video tag.
+					</video>
 		</div>
 	</header>
 
@@ -55,7 +59,7 @@
 				</div>
 		</div>
 	</section>
-	
+
 	<!-- Footer de la pagina -->
 	<footer>
 		<div class="footer">
