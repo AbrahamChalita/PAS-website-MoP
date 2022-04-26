@@ -377,8 +377,12 @@ def unity2(request):
 	query = body['pwd']
 	mydb = sqlite3.connect("db.sqlite3")
 	cur = mydb.cursor()
-	stringSQL = '''SELECT Username, UserID, HashPwd, Country FROM User WHERE HashPwd = ?'''
-	rows = cur.execute(stringSQL,(query,))
+	stringSQL = '''
+	SELECT Username, UserID, HashPwd, Country
+	FROM User
+	WHERE User.HashPwd = ? AND User.Username = ?
+	'''
+	rows = cur.execute(stringSQL,(body['pwd'],body['userName'],))
 	r = rows.fetchone()
 
 	if r == None:
