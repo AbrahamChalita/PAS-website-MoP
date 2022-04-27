@@ -336,7 +336,7 @@ input[type=text], textarea, input[type=email], input[type=password], input[type=
     border-radius: 4px;
     border: 2px solid rgba(0,0,0,0);
 }
-/* /end Codepen Specific */
+
 /* Ladder Navigation */
   .leaderboardbox #leaderboard {
       padding:50px;
@@ -425,11 +425,14 @@ input[type=text], textarea, input[type=email], input[type=password], input[type=
 footer {
 	background-color: rgb(65, 141, 255);
 	width: 100%;
-	left: 0px;
 	text-align: center;
 }
+
 /* Centrado de Contenido en Footer */
-.footer {
+.footer-test {
 	padding: 25px 25px;
-	color: white;
+	color: rgb(255, 255, 255);
 }
+
+
+
