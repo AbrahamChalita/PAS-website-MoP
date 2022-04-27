@@ -365,6 +365,67 @@ def hardest_question(request):
 	j = dumps(d)
 	return HttpResponse(j, content_type="text/json-comment-filtered")
 
+def update_seconds(request):
+	query = request.GET['GameID']
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+
+	stringSQL = '''
+	SELECT Seconds
+	FROM GameResume
+	WHERE GameID = ?
+	'''
+
+	rows = cur.execute(stringSQL,(query,))
+	seconds = rows.fetchone()[0]
+
+	stringSQL = '''
+	SELECT Seconds
+	FROM GameResume
+	WHERE GameID = ?
+	'''
+
+	seconds = seconds + int(float(request.GET['Seconds']))
+
+	stringSQL = '''
+	UPDATE GameResume
+	SET Seconds = ?
+	WHERE GameID = ?
+	'''
+
+	rows = cur.execute(stringSQL,(seconds,query,))
+	
+	mydb.commit()
+	mydb.close()
+
+	d = {}
+	j = dumps(d)
+	return HttpResponse(j, content_type="text/json-comment-filtered")
+
+def seconds_played(request):
+	query = request.GET['UserID']
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+
+	stringSQL = '''
+	SELECT sum(Seconds)
+	FROM GameResume
+	WHERE UserID = ?
+	'''
+
+	rows = cur.execute(stringSQL,(query,))
+	r = rows.fetchone()
+
+	d = {}
+
+	if r == None:
+		raise Http404("User has not played any quizes.")
+	else:
+		d['seconds'] = r[0]
+
+	j = dumps(d)
+	return HttpResponse(j, content_type="text/json-comment-filtered")
+
 #################
 # POST Messages #
 #################
