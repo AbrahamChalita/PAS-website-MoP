@@ -385,7 +385,7 @@ def update_seconds(request):
 	WHERE GameID = ?
 	'''
 
-	seconds = seconds + int(float(request.GET['Seconds']))
+	seconds = seconds + int(float(request.GET['Seconds'].replace(',', '.')))
 
 	stringSQL = '''
 	UPDATE GameResume

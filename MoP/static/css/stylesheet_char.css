@@ -182,16 +182,14 @@ img {
 	margin-left: -20%;
 }
 
-/* Estilo de Footer */
 footer {
 	background-color: rgb(65, 141, 255);
 	width: 100%;
-	left: 0px;
 	text-align: center;
 }
 
 /* Centrado de Contenido en Footer */
-.footer {
+.footer-test {
 	padding: 25px 25px;
-	color: white;
+	color: rgb(255, 255, 255);
 }
