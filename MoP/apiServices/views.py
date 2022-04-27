@@ -392,9 +392,11 @@ def update_seconds(request):
 	SET Seconds = ?
 	WHERE GameID = ?
 	'''
+	
+	mydb.commit()
+	mydb.close()
 
 	rows = cur.execute(stringSQL,(seconds,query,))
-	seconds = rows.fetchone()[0]
 
 	d = {}
 	j = dumps(d)
