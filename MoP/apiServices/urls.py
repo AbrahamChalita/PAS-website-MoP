@@ -23,6 +23,8 @@ urlpatterns = [
 	path('quizes_played', views.quizes_played, name='quizes_played'), # Quizes jugados por el usuario
 	path('score_by_quiz', views.score_by_quiz, name='score_by_quiz'), # Scores del jugador por quiz
 	path('hardest_question', views.hardest_question, name='hardest_question'), # Scores del jugador por quiz
+	path('update_seconds', views.update_seconds, name='update_seconds'), # Scores del jugador por quiz
+	path('seconds_played', views.seconds_played, name='seconds_played'), # Scores del jugador por quiz
 
 	path('progress_info', views.progress_info, name='progress_info'),
 	path('quiz_info', views.quiz_info, name='quiz_info'),
