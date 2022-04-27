@@ -323,6 +323,48 @@ def quizes_played(request):
 	j = dumps(d)
 	return HttpResponse(j, content_type="text/json-comment-filtered")
 
+def hardest_question(request):
+	query = request.GET['UserID']
+	mydb = sqlite3.connect("db.sqlite3")
+	cur = mydb.cursor()
+
+	stringSQL = '''
+	SELECT QuestionTxt
+	FROM Question
+	WHERE QuestionID IN
+	(
+		SELECT QuestionID
+		FROM QuestionGame
+		WHERE QuizPlayID IN
+		(
+			SELECT QuizPlayID
+			FROM QuizGame
+			WHERE GameID IN 
+			(
+				SELECT GameID
+				FROM GameResume
+				WHERE UserID = 2
+			)
+		)
+		GROUP By QuestionID
+		ORDER By sum(Correct) ASC
+		LIMIT 1
+	)
+	'''
+
+	rows = cur.execute(stringSQL,(query,))
+	r = rows.fetchone()
+
+	d = {}
+
+	if r == None:
+		raise Http404("User has not played any quizes.")
+	else:
+		d['question'] = r[0]
+
+	j = dumps(d)
+	return HttpResponse(j, content_type="text/json-comment-filtered")
+
 #################
 # POST Messages #
 #################
