@@ -343,7 +343,7 @@ def hardest_question(request):
 			(
 				SELECT GameID
 				FROM GameResume
-				WHERE UserID = 2
+				WHERE UserID = ?
 			)
 		)
 		GROUP By QuestionID
