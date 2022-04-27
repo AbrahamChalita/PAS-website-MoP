@@ -32,17 +32,17 @@
     <script type="text/javascript">
 		google.charts.load('current', {'packages':['corechart']});
 		google.charts.setOnLoadCallback(drawChart);
-  
+
 		function drawChart() {
-  
+
 		  var data = google.visualization.arrayToDataTable({{values|safe}});
-  
+
 		  var options = {
 			title: 'Meet your new friends form all over the world'
 		  };
-  
+
 		  var chart = new google.visualization.PieChart(document.getElementById('regionsPie_div'));
-  
+
 		  chart.draw(data, options);
 		}
 	  </script>
@@ -93,15 +93,15 @@
 					<div class="aboutgame">
 						<h2> ABOUT THIS GAME </h2>
 						<hr>
-						<p> Masters of Percussion is a game with the main <strong>purpose of 
-							teaching players about the different percussion instruments 
-							that exist in the different regions and cultures of the world, 
-							their level of complexity and their moves.</strong> The game will star 
-							a small bear, controlled by the player, who will be able to 
-							converse with various animal NPCs about the instruments of his 
-							culture and will have to pass levels of obstacles that separate 
-							each region or culture. In addition, to test the player's learning, 
-							he will perform a series of quizzes in order to advance in the game 
+						<p> Masters of Percussion is a game with the main <strong>purpose of
+							teaching players about the different percussion instruments
+							that exist in the different regions and cultures of the world,
+							their level of complexity and their moves.</strong> The game will star
+							a small bear, controlled by the player, who will be able to
+							converse with various animal NPCs about the instruments of his
+							culture and will have to pass levels of obstacles that separate
+							each region or culture. In addition, to test the player's learning,
+							he will perform a series of quizzes in order to advance in the game
 							and continue his journey.</p>
 					</div>
 				</div>
@@ -122,17 +122,17 @@
 					<div class="controls">
 						<h2> PLAYING </h2>
 						<hr>
-						<p> 
-							Playing is really easy. All you have to do is push the button on 
-							the top right corner, register and start having fun learning about 
-							percussion instruments. As for the mechanics, remember that to progress 
-							you have to answer a ultimate quiz with the information given by 
-							different characters. Move around the world with “WASD” keys. To 
-							start each interaction use “F” on your keyboard and space to move on. 
-							Inside the exams use the arrows, mouse and enter to select the answers, 
-							but be QUICK! Answering will grant you passage to path towards other worlds. 
-							However you have to overcome the obstacles and enemies on the way with the 
-							instruments you may have earned. 
+						<p>
+							Playing is really easy. All you have to do is push the button on
+							the top right corner, register and start having fun learning about
+							percussion instruments. As for the mechanics, remember that to progress
+							you have to answer a ultimate quiz with the information given by
+							different characters. Move around the world with “WASD” keys. To
+							start each interaction use “F” on your keyboard and space to move on.
+							Inside the exams use the arrows, mouse and enter to select the answers,
+							but be QUICK! Answering will grant you passage to path towards other worlds.
+							However you have to overcome the obstacles and enemies on the way with the
+							instruments you may have earned.
 						</p>
 
 					<img class="cuphead1" src="{% static 'img/cup1.jpg' %}">
@@ -164,9 +164,8 @@
 							<hr>
 							<ul>
 								<li> Players right now - <strong>{{values4}}</strong></li>
-								<li> 24 hour peak - <strong>12, 935</strong></li>
-								<li>all time peak - <strong>272, 586</strong></li>
-								<li>Total played time - <strong>489d, 19h. 23min</strong></li>
+								<li> Players that have beaten the game - <strong> {{values6}}</strong></li>
+								<li>Total played time - <strong>{{values5}}</strong>  seconds </li>
 							</ul>
 
 							<div id="chart_div" style="width: 100%; height: 500px;"></div>
@@ -176,7 +175,7 @@
 					<div class = "flex-child team">
 						<div class="info-team">
 							<p>
-								<strong>We are The Rolling Drums, an indie game developer group, 
+								<strong>We are The Rolling Drums, an indie game developer group,
 								focused on creating games for education and wellness. We are:</strong>
 							</p>
 
@@ -221,13 +220,15 @@
 									<th>Username</th>
 								</tr>
 							</thead>
-							<tbody> 
+							<tbody>
 								{% for d in values2 %}
+									{% if forloop.counter < 11 %}
 									<tr>
 									{% for x in d %}
-										<td>{{x}}</td>
+												<td>{{x}}</td>
 									{% endfor %}
 									</tr>
+									{% endif %}
 								{% endfor %}
 							</tbody>
 						</table>
@@ -256,8 +257,6 @@
 			</div>
 		</div>
 	</section>
-	
-	
 	<!-- Footer de la pagina -->
 	<footer>
 		<div class="footer">

@@ -11,7 +11,7 @@ body {
     background: #fff;
     margin: 0;
 }
- 
+
 ul {
     list-style: none;
 }
@@ -31,16 +31,16 @@ img {
 #main-nav {
     display: flex;
     justify-content: space-between;
-    padding-top: 1rem; 
+    padding-top: 1rem;
 }
 
 /* This makes the elements on the nav-bar horizontal */
 #main-nav ul {
-    display: flex; 
+    display: flex;
 }
 
 #main-nav li {
-    padding: 1rem 1.5rem; 
+    padding: 1rem 1.5rem;
 }
 
 #main-nav a {
@@ -51,31 +51,31 @@ img {
     font-size: 20px;
     border-bottom: 3px transparent solid;
     padding-bottom: 0.5rem;
-    transition: border-color 0.5s; 
+    transition: border-color 0.5s;
 }
 
 #main-nav a:hover {
-    border-color: #ccc; 
+    border-color: #ccc;
 }
 #main-nav a.current {
-    border-color: #1c56df; 
+    border-color: #1c56df;
 }
 
 #header-home {
     background: url("../img/bonfire.gif") no-repeat center right/cover;
     height: 100vh;
-    color: #fff; 
+    color: #fff;
 }
 
 #header-home .header-content {
     text-align: center;
-    padding-top: 20%; 
+    padding-top: 4%;
 }
 
 #header-inner {
     background: url("../img/bonfire.gif") no-repeat 20% 30%/cover;
     height: 7rem;
-    border-bottom: 3px solid #2c62e0; 
+    border-bottom: 3px solid #2c62e0;
 }
 
 .back{
@@ -104,7 +104,7 @@ img {
 
 .flex-child {
     flex: 1;
-}  
+}
 
 .flex-child img{
     width: 105%;
@@ -112,7 +112,7 @@ img {
 
 .flex-child:first-child {
     margin-right: 35px;
-} 
+}
 
 .info-text {
     background: rgba(104, 100, 100, 0.637);
@@ -174,9 +174,9 @@ img {
 .arrows path {
 	stroke: #e3b00a;
 	fill: transparent;
-	stroke-width: 2.5px;	
+	stroke-width: 2.5px;
 	animation: arrow 4s infinite;
-	-webkit-animation: arrow 4s infinite; 
+	-webkit-animation: arrow 4s infinite;
 }
 
 @keyframes arrow {
@@ -195,19 +195,19 @@ img {
 
 .arrows path.a1 {
 	animation-delay:-1s;
-	-webkit-animation-delay:-1s; 
+	-webkit-animation-delay:-1s;
 }
 
 /* Modificaciones para chrome y safari */
 
 .arrows path.a2 {
 	animation-delay:-0.5s;
-	-webkit-animation-delay:-0.5s; 
+	-webkit-animation-delay:-0.5s;
 }
 
-.arrows path.a3 {	
+.arrows path.a3 {
 	animation-delay:0s;
-	-webkit-animation-delay:0s; 
+	-webkit-animation-delay:0s;
 }
 
 .flex-child .gameslide {
@@ -318,17 +318,6 @@ img {
     padding-top: 60px;
 }
 
-footer {
-	background-color: rgb(65, 141, 255);
-	width: 100%;
-	left: 0px;
-	text-align: center;
-}
-/* Centrado de Contenido en Footer */
-.footer {
-	padding: 25px 25px;
-	color: white;
-}
 
 input[type=text], textarea, input[type=email], input[type=password], input[type=tel], input[type=url], input[type=search], input[type=date] {
     padding: 10px;
@@ -415,7 +404,7 @@ input[type=text], textarea, input[type=email], input[type=password], input[type=
 }
 .leaderboardbox .leaderboard-results tbody tr {
   color:#747474;
-} 
+}
 .leaderboardbox .leaderboard-results tbody tr:first-child {
   color:#686EF9;
 }
@@ -433,5 +422,14 @@ input[type=text], textarea, input[type=email], input[type=password], input[type=
   color:#747474;
 }
 
-
-
+footer {
+	background-color: rgb(65, 141, 255);
+	width: 100%;
+	left: 0px;
+	text-align: center;
+}
+/* Centrado de Contenido en Footer */
+.footer {
+	padding: 25px 25px;
+	color: white;
+}
