@@ -385,7 +385,7 @@ def update_seconds(request):
 	WHERE GameID = ?
 	'''
 
-	seconds = seconds + request.GET['Seconds']
+	seconds = seconds + int(request.GET['Seconds'])
 
 	stringSQL = '''
 	UPDATE GameResume
