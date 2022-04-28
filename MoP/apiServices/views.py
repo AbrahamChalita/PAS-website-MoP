@@ -610,21 +610,11 @@ def save_level(request):
 
 	cur.execute(stringSQL,(body['LevelID'], body['GameID'], body['Score'], body['Playtime'],))
 
-	cur = mydb.cursor()
-	stringSQL = '''
-	SELECT LevelPlayID
-	FROM LevelGame
-	ORDER BY LevelPlayID DESC
-	LIMIT 1
-	'''
-	quizPlayId = cur.execute(stringSQL)
-
-	d = {}
-	d["LevelPlayID"] = quizPlayId.fetchone()[0]
-
 	mydb.commit()
 	mydb.close()
 	
+	d = {}
+
 	j = dumps(d)
 	return HttpResponse(j, content_type="text/json-comment-filtered")
 
