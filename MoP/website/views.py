@@ -62,7 +62,7 @@ def videogame(request):
 		as total_players,
 		(SELECT SUM(Seconds) as total_playtime from GameResume)
 		as total_playtime,
-		(SELECT COUNT(*) FROM GameResume where Checkpoint = 3)
+		(SELECT COUNT(*) FROM GameResume where Checkpoint = 2)
 		as finish
 	'''
 	v_player = "Players"
